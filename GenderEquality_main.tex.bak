@@ -1,0 +1,200 @@
+%%
+%% BIOTS - Hackathon 2018
+%%
+%% Roy Schubiger, 2018
+%% 
+%% Licence: Creative Commons Attribution-Share Alike 3.0 Unported
+%% http://creativecommons.org/licenses/by-sa/3.0/
+%% 
+
+\documentclass[portrait,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{amssymb, amsfonts, amsmath}
+\usepackage{xcolor}
+%\usepackage[e]{esvect}
+\usepackage{floatrow} % allows to insert pictures into proofs and theorems
+
+\usepackage{cancel}
+
+\usepackage{graphicx}
+%\usepackage{picins}
+\usepackage{tabularx}
+\usepackage{mwe} % for blindtext and example-image-a in example
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{framed}
+\colorlet{shadecolor}{orange!15}
+
+\usepackage{geometry}
+\geometry{a4paper, left=15mm, right=15mm, top=20mm, bottom=20mm} 
+
+\usepackage{multirow}
+\usepackage{multicol}
+\columnsep24pt
+\columnseprule0.1pt
+
+\renewcommand{\baselinestretch}{1.4}
+
+% hyperref
+\usepackage[colorlinks=false,pdfborder = {0 0 0 0}]{hyperref}
+
+\parindent0pt
+\setcounter{secnumdepth}{4}
+
+%% Redefine the \paragraph command:
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{0mm}%
+	{-\baselineskip}%
+	{0.5\baselineskip}%
+	{\normalfont\bfseries}%
+}%
+\makeatother 
+
+% algorithms
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\algsetup{linenodelimiter=}
+
+% listings
+\definecolor{darkgreen}{RGB}{0,127,14}
+\usepackage{listings}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\ttfamily\mdseries, % basicstyle=\linespread{5},% basic font setting
+    %escapeinside={!}{!},
+    tabsize=4,
+    morecomment=[l][\color{cyan}]{\#},
+    % numbering
+    numbers=left, stepnumber=1, numberstyle=\tiny, numbersep=20pt, numberblanklines=false,
+    inputencoding=utf8x,
+	xleftmargin=30pt,
+	xrightmargin=10pt,
+	aboveskip=0.5em,
+    belowskip=0.5em,
+    columns=fullflexible,
+	breaklines=true,
+	framerule=0mm,
+	frame=single,
+	showstringspaces=false,
+	commentstyle=\color{black!65},	
+	captionpos=b,
+	float=float,
+	mathescape= true,
+	columns=fullflexible
+}
+% theorem package
+\usepackage{amsthm}
+\usepackage{thmtools}
+\newtheoremstyle{my-thm-style}% name
+{6pt}% Space above
+{5pt}% Space below
+{}% Body font
+{}% Indent amount
+{\bfseries}% Theorem head font
+{}% Punctuation after theorem head
+{8pt}% Space after theorem head
+{}% Theorem head spec (can be left empty, meaning `normal')
+\definecolor{orange}{rgb}{1,0.5,0}
+\declaretheoremstyle[
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+name={\ignorespaces},
+headpunct=,
+postheadspace=0pt,
+spaceabove=1pt,
+mdframed={
+  skipabove=2pt,
+  skipbelow=2pt,
+  hidealllines=false,
+  backgroundcolor={orange!40},
+  innerleftmargin=8pt,
+  innerrightmargin=8pt}
+]{box}
+\declaretheorem[style=box, numbered=no]{BOX}
+\newcommand{\comment}[1]{\begin{BOX} #1 \end{BOX}}
+
+\usepackage[english]{babel} 
+
+\title{bEquality - Automated tracker for gender equality with blockchain \\[-10pt] Creation of an automated and reliable gender equality index}
+
+\author{Lena Csomor, Qianchen Yu, Lena Csomor, Noah Berner, Eric Léger,\\[-4pt] Fredin Thazhathukunnel, Matthias Matti, Lino Telschow, Roy Schubiger}
+
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{1pt}
+\hrule
+\vspace{1pt}
+
+\begin{center}
+	This project has been built in the context of the BIOTS Hackathon 2018\\
+	Blockchain and the Internet of Things School\\[8pt]
+	\textbf{Project repository:} \url{https://github.com/ETHBiots2018/bEquality}
+\end{center}
+
+\vspace{1pt}
+\hrule
+\vspace{1pt}
+
+\section*{Abstract}
+
+	\input{Abstract} % ABSTRACT
+	\clearpage
+	
+	\subsection*{Introduction}
+		\input{Project_Introduction}
+	
+\section{Project}
+	
+	\subsection{Overview}
+		\input{Project_Overview}
+	
+	\subsection{Challenges to Solve}
+		\input{Project_Challenges}
+			
+\section{Technical Implementation}
+	
+	\subsection{Data Capture and Storage}
+		\input{Impl_Survey}
+				
+	\subsection{Data Verification}
+		\input{Impl_Data_Verification}
+		
+	\subsection{Display Solution/Evaluation}
+		\input{Impl_Display_Solution}
+					
+	\subsection{OTHER THINGS TO ADD HERE}
+		todo\\
+	\subsection{Further Points Worth to Consider}
+		\input{Impl_Further_Points}	
+
+\section{Conclusion}
+	\input{Conclusion}
+	
+
+\section{Sources and Literature}
+
+	\input{Sources_and_Literature}
+ 	Dateiname - Author - Jahr - Link/Buch\\
+		
+	
+
+
+% fill the page
+\clearpage
+
+%\end{multicols}
+
+\end{document}
+
+

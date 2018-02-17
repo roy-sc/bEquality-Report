@@ -1,0 +1,14 @@
+The current situation of the economy is not fully inclusive for every member of the society, women get discriminated, sexually harassed and do not have equal chance of high salaries and or higher positions in companies.\\
+Our Project bEquality aims to punctually recognize inequality by providing a transparent, reliable and efficient gender-equality index for companies. We think that applying and evaluating a gender-equality index should not be expensive and exclusive to companies that can afford it.\\
+We aim to improve todays state of society with respect to gender-equality in the economy.\\
+
+This document summarizes our approach to solve this problem. Our solution has come up on a hackathon organized by the Blockchain and Internet of Things School (BIOTS) 2018.\\
+
+We will first present you our whole process systematically and then later dive further into the implementation of the whole process.\\
+The reader should have basic programming understanding or basic logical thinking to understand our approach and implementation, we try to explain it as easy as possible.
+
+\comment{
+-describe structure of report - done\\
+-describe prerequisities - done\\
+-general things - Q: what to add more?
+}

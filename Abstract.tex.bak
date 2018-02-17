@@ -1,0 +1,18 @@
+%introduction
+Today, most companies' market value is driven by intangible value,such as reutation or branch equity. Thus, thousands of companies now provide detailed 
+extra-financial information. Regulations are mandating increased management disclosure and analysis on sustainability, and investors are analyzing the
+comprehensive risks and opportunities of issuers in public and private markets. One aspect of this extra-financial information is data on gender equality.\\
+And more and more investors take this data into consideration when investing as research suggests that good gender equality practice can serve as an
+indicator for good corporate governance and decision making and these companies might outperform in the future.
+%oroblem description
+To get a structured, concise and comparable overview of this data, investors often relay on established gender-equality certifications. Unfortunately, this process is costly, time intensive and 	requires multiple revisions to produce reliable data.
+\\
+
+%motivation	
+Our project aims to simplify and automate the process of obtaining such a gender-equality certifications based on an existing Gender-Equality-Framework, and to make its results publicly accesible for everybody.\\
+%approach
+Our approach focuses on the data capture, data storage, data validation and a the display solution of the process.\\
+The data is obtained by the means of a website and an app whereas the storage solution relays on an E-voting system, based on the latest blockchain and cryptographic technology. The solution provides the code of the communication interfaces for the website and the app, as well as the necessary code to handle the data for the E-Voting system via blockchain.\\ Furthermore, a Radar-Chart is used to present the results in a straightforward manner.\\
+
+%conclusion	
+In conclusion the platform ensures a trustful, transparent and cheap way to create a gender-equality-index, which is useful for people to make investment decisions and for companies to further improve their status with respect to gender equality.
