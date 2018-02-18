@@ -63,14 +63,14 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \lstset { %
-    language=C,
+    language=Java,
     backgroundcolor=\color{black!5}, % set backgroundcolor
     basicstyle=\ttfamily\mdseries, % basicstyle=\linespread{5},% basic font setting
     %escapeinside={!}{!},
     tabsize=4,
     morecomment=[l][\color{cyan}]{\#},
     % numbering
-    numbers=left, stepnumber=1, numberstyle=\tiny, numbersep=20pt, numberblanklines=false,
+    numbers=left, stepnumber=1, numberstyle=\tiny, numbersep=20pt, numberblanklines=true,
     inputencoding=utf8x,
 	xleftmargin=30pt,
 	xrightmargin=10pt,
@@ -84,8 +84,7 @@
 	commentstyle=\color{black!65},	
 	captionpos=b,
 	float=float,
-	mathescape= true,
-	columns=fullflexible
+	mathescape= true
 }
 % theorem package
 \usepackage{amsthm}

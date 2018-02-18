@@ -1,51 +1,135 @@
-\comment{-------Text from Noah's presentation to be included in this section----------}
-I will now explain in a short and hopefully not too technical way how our e-voting protocol actually works. A company that wants to be part of our rating applies and sends their unverified data via smart contract to the blockchain. They also send bEquality the email addresses of all employees which we store in a secure and private database. We then send links to a chosen percentage of employees with which they can register a blockchain account and their new Ethereum address is automatically sent to our database. We load a small amount of Ethereum onto their account so that they can pay for one transaction. bEquality then creates a survey-contract on the blockchain and sends the link via an app to all employees so that they can fill in their answers directly onto the blockchain. After all the survey have been filled out, the data on the blockchain is analysed by our system and published on our website. Because the data is on the blockchain, everyone can verify the integrity of our analysis. Yet there are still challenges ahead of us, for example the possible storing of the Ethereum addresses on the blockchain instead of a private database for further transparency.
-\comment{----------------------------------END TEXT------------------------------------------------------------}
+As already mentioned earlier, the \textit{data capture} process is split into two parts.\\
+The first part is the evaluation of a survey handed to the management of the company, i.e. the \textit{company provided data}. This first part can be implemented via a survey that is being transmitted to us.\\
+The second part of \textit{data capture}, the \textit{employee survey}, is a special point of interest. Because it is important to guarantee anonymity to the employee and at the same time ensure validity and transparency of the data that is provided. We implemented this second part with a protocol that is equivalent to an \textit{E-voting system} that is explained in detail below.\\
+
+\paragraph*{E-voting protocol}
+A company that wants to be part of our rating applies and sends their unverified data via smart contract (contract \texttt{SurveyFactory}) to the blockchain. This initiates the whole process of survey generation.
+\begin{lstlisting}
+// https://github.com/EriCreator/bEquality/blob/master/Survey.sol
+/*	SurveyFactory serves as a hub 
+	(deployed on the blockchain upon the launching of bEquality)
+	Company can create their own survey by providing a list of permitted user address. */
+
+contract SurveyFactory {
+
+  //address owner;
+  mapping(uint => address) public SurveyContracts;
+
+  // function SurveyFactory(address adr) public 
+  // {
+  //		owner = adr;
+  // }
+
+  function createNewSurvey(uint companyID, address[] addressessOfEmployees, string _hashToaddressessOfEmployees) public returns(address newContract)
+  {
+    // require(msg.sender == owner);
+    require(SurveyContracts[companyID] == 0x0);
+    Survey c = new Survey(addressessOfEmployees, _hashToaddressessOfEmployees);
+    SurveyContracts[companyID] = c;
+    return c;
+  }
+  
+  function getContractAddress(uint companyID) public constant returns (address)
+  {
+    return SurveyContracts[companyID];
+  }
+}
+\end{lstlisting}
+They also send bEquality the email addresses of all emplyees, as observable in the function \texttt{createNewSurvey}), which we store in a secure and private data base.\\
+We do not store the password of the employee explicitly, we instead store the hashed password linked to the corresponding username. To further link the private key to the account, we also store the hashed private key on our database.\\
+This account stored on our database does not allow us to login to the user-account, but we can verify validity of the account, when a user wants to log in.
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{Bilder/SecureLoginDataStorage-scheme.eps}
+	\caption{Secure login data storage}
+	\label{Secure_Login_data_storage}
+\end{figure}
+\comment{Is this correct?}
+When all accounts are set up and put money on them to pay for the transaction costs, the employee gets notified that he has to log into his account and fill out the survey.\\
+The employee then acts on the following smart contract \texttt{Survey}, that only he can modify, but not the contract-creator.\\
+When the employee has filled out his survey, he submits his data via a user-friendly interface and the data gets stored anonymously on the blockchain. The user therefore can verify that his data is not altered, but at the same time there is guaranteed that the employer cannot prosecute the employee for telling the truth about the company.
+
+\begin{lstlisting}
+// https://github.com/EriCreator/bEquality/blob/master/Survey.sol
+/*
+   Survey is the child contract created by the SurveyFactory where only the permitted user can modify.
+*/
+
+contract Survey {
+    mapping (address => string) public hashes;
+    mapping (address => bool) public isAllowedToSumbitSurvey;
+    string hashToaddressessOfEmployees;
+
+    function Survey(address[] addressessOfEmployees, string _hashToaddressessOfEmployees) public {
+        hashToaddressessOfEmployees = _hashToaddressessOfEmployees;
+        for (uint256 index = 0; index < addressessOfEmployees.length; index++) {
+            isAllowedToSumbitSurvey[addressessOfEmployees[index]] = true;
+        }
+    }
+
+    function submitResults(string myHash) public {
+        require(bytes(hashes[msg.sender]).length == 0);
+        require(isAllowedToSumbitSurvey[msg.sender]);
+        hashes[msg.sender] = myHash;
+    }
+
+}
+\end{lstlisting}
 
 
--introduction to this part
+Because all data is stored on the blockchain, everyone can verify the integrity of our analysis, and can even make his own analysis of the given data. This allows full transparency towards the shareholders and future investors in the company.\\
 
+Yet there are still challenges ahead of us, for example the possibility of storing the Ethereum addresses on the blockchain instead of a private database for further transparency and automation of the process.\\
+
+Below is shown the full protocol in a schematic way, to give the reader an overeview of our E-voting protocol.
 \begin{figure}[H]
 	\includegraphics[width=0.9\textwidth]{Bilder/Survey_Protocol_preview_2}
 	\caption{technical flow representation of the data capture and storage process}
 	\label{technical_flow_representation}
 \end{figure}
-\comment{-------- insert picture of technical flow by Noah Berner}
 
+\comment{CANCEL THAT?? (below):
 \paragraph*{Survey for Employer}
+The survey handed to the employer, that applies to our gender-equality index, is based on already existing frameworkds such as the Bloomberg gender-equality index or the gender-equality index of Equileap.\\
+
 -based on existing frameworks such as Bloomberg, Equileap\\
 capturing data with app or web
 -delivers e-mail addresses from employees\\
 --addresses stored on private database\\
 -survey stored on IPFS\\
--explain interaction with web/App\\
+-explain interaction with web/App 
+}
+
+We now dive deeper into details of the implementation of the employee survey.
 
 
 \paragraph*{Survey for Employees}
+The survey for the employees presents the employee with gender specific questions and also with questions applicable for both men and women. These questions guarantee further insight into the microclimate of the employees that cannot be obtained by just consulting the company management.\\
 
--are there existing questions for gender specific questions or not? Do we have to come up with questions which are applicable for men and/or women\\
--questions chosen possibly in a random manner.\\
--only percentage of employees (explain why only a percentage, mention pro's and con's)\\
+We earlier explained that we hand our survey to just a randomly chosen percentage of all employees. This is done to increase efficiency of the gender-equality index while cutting costs of applying to that index. The random sample provides us with a hopefully real view of the microclimate of employees. Unfortunately this random sample could lead to a completely wrong picture of the company, we therefore have the option to increase this sample, when there is too much variation from the employer provided data.\\
 
+
+\comment{
 capturing data with app or web\\
 -explain,that process automated in the background\\
 -what does the employee has to do\\
--what is done behind the scenes\\
-	
+-what is done behind the scenes
+}
+
+
+\comment{	
 storing data: blockchain, IPFS, (some on server)\\
 -how is privacy of data secured\\
 -explain process, what does this mean for different data\\
 --sensibele data -- server\\
 --insensible data -- ipfs\\
 --non-fakeable -- blockchain\\
--explain cost aspect of storing stuff on blockchain or on IPFS (storing on blockchain costly)\\
+-explain cost aspect of storing stuff on blockchain or on IPFS (storing on blockchain costly)
+}
 
-
+\comment{
 how can anonymity/privacy be ensured\\
 -because data on blockchain, IPFS, it is visible for everybody, but boss should not be able to track the results of employees (how do we solve that)\\
 
 state technical problems
-
-...
-
+}
 
